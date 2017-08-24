@@ -5,11 +5,28 @@ const path = require('path');
 const debug = require('debug')('k8s-config');
 const EventEmitter = require('events');
 
+const DefaultConfig = {
+    addToEnv: false,
+    optional: false
+};
+
 class Config extends EventEmitter {
-    constructor() {
+    constructor(opts) {
         super();
+        this._opts = opts || DefaultConfig;
         this._map = new Map();
         this._configMountPath = process.env.KUBERNETES_CONFIG_MOUNT_PATH || '/etc/config';
+
+        if (!fs.existsSync(this._configMountPath)) {
+            const msg = 'Configuration directory not found - ' + this._configMountPath;
+            if (!this._opts.optional) {
+                throw new Error(msg);
+            } else {
+                debug('WARN: %s', msg);
+                debug('This configuration will not be used!');
+                return;
+            }
+        }
 
         this._reloadSync();
         debug('Initial configuration loaded');
@@ -23,7 +40,7 @@ class Config extends EventEmitter {
         });
     }
 
-    get(key, defaultVal = null) {
+    get (key, defaultVal = null) {
         const res = this._map.has(key) ? this._map.get(key) : defaultVal;
         debug('get - key: %s, defaultVal: %j, result: %j', key, defaultVal, res);
         return res;
@@ -52,13 +69,24 @@ class Config extends EventEmitter {
                 return !fs.lstatSync(p).isDirectory() && !path.basename(p).match(/^\.\.data$/);
             });
         debug('keyPaths: %j', keyPaths);
+
+        if (this._opts.addToEnv) {
+            // unset any previously set vals
+            this._map.forEach((v, k) => {
+                delete process.env[k];
+            });
+        }
+
         keyPaths.forEach((keyPath) => {
             const key = path.basename(keyPath).replace('\n', '');
             const val = fs.readFileSync(keyPath).toString().replace(/\n*$/g, '');
             debug('Set - key: %s: %s', key, val);
             this._map.set(key, val);
+            if (this._opts.addToEnv) {
+                process.env[key] = val;
+            }
         });
     }
 }
 
-module.exports = new Config();
+module.exports = Config;

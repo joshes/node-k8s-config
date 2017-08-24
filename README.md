@@ -1,11 +1,13 @@
 # node-k8s-config
 
-Reloads Kubernetes configmap data from mounted volumes.
+Reloads Kubernetes configmap data from mounted volumes. Optionally, these values can be added to the (Node) environment. 
 
 # Usage
 
 ```javascript 1.6
-const config = require('k8s-config');
+const Config = require('k8s-config');
+
+const config = new Config({addToEnv: true, optional: false});
 
 // Get a value
 const val = config.get('myKey');

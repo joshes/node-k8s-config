@@ -7,6 +7,10 @@ server.get('/config', (req, res) => {
     res.send(config.dump());
 });
 
+server.get('/env', (req, res) => {
+    res.send(process.env);
+});
+
 server.listen(process.env.PORT || 3000, () => {
     console.log('%s listening at %s', server.name, server.url);
 });

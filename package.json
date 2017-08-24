@@ -1,6 +1,6 @@
 {
   "name": "k8s-config",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Reloads Kubernetes configmap data from mounted volumes",
   "main": "index.js",
   "scripts": {
