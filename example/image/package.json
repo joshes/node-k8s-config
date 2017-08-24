@@ -1,0 +1,16 @@
+{
+  "name": "node-k8s-config-example",
+  "version": "1.0.0",
+  "description": "Example implementation of node-k8s-config library.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "joshes",
+  "license": "ISC",
+  "dependencies": {
+    "k8s-config": "^1.0.6",
+    "restify": "^5.2.0"
+  }
+}

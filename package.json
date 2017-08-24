@@ -1,0 +1,17 @@
+{
+  "name": "k8s-config",
+  "version": "1.0.6",
+  "description": "Reloads Kubernetes configmap data from mounted volumes",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "joshes",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^3.5.0"
+  },
+  "dependencies": {
+    "debug": "^3.0.0"
+  }
+}
