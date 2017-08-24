@@ -16,7 +16,9 @@ class Config extends EventEmitter {
         this._opts = opts || DefaultConfig;
         this._map = new Map();
         this._configMountPath = process.env.KUBERNETES_CONFIG_MOUNT_PATH || '/etc/config';
+    }
 
+    watch() {
         if (!fs.existsSync(this._configMountPath)) {
             const msg = 'Configuration directory not found - ' + this._configMountPath;
             if (!this._opts.optional) {

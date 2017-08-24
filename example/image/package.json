@@ -10,7 +10,7 @@
   "author": "joshes",
   "license": "ISC",
   "dependencies": {
-    "k8s-config": "^1.0.8",
+    "k8s-config": "^1.0.9",
     "restify": "^5.2.0"
   }
 }
