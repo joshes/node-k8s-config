@@ -6,6 +6,10 @@
   "scripts": {
     "test": "mocha"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joshes/node-k8s-config.git"
+  },
   "author": "joshes",
   "license": "ISC",
   "devDependencies": {
